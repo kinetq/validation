@@ -1,5 +1,7 @@
 # Kinetq.Validation
 
+![CI](https://github.com/kinetq/validation/workflows/CI/badge.svg)
+
 This Validation library is very unopinionated. There are no built in validations. Instead it simply sets up a pattern where validation is called based on the object posted to a controller by matching it up using reflection. By doing this one can more easily setup custom validation based on backend logic (which a lot of the time needs to go to the database). 
 
 
