@@ -1,4 +1,4 @@
-﻿using Kinetq.Validation.Validators.Models;
+﻿using Kinetq.Validation.Models;
 
 namespace Kinetq.Validation.Interfaces
 {
@@ -7,6 +7,7 @@ namespace Kinetq.Validation.Interfaces
         Task Execute(T dto, ValidationErrors validationErrors);
         int Order { get; }
         IValidatorFactory ValidatorFactory { get; set; }
-        Func<string, int?, string> GetName { get; set; }
+        Func<string, string> GetName { get; set; }
+        Func<string, int, string> GetNameWithIndex { get; set; }
     }
 }

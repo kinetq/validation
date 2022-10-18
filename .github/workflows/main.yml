@@ -1,0 +1,36 @@
+name: CI
+
+on: 
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+          
+    - name: Restore Solution
+      run: dotnet restore Kinetq.Validation.sln
+      
+    - name: Build Solution
+      run: dotnet build Kinetq.Validation.sln 
+      
+    - name: Test Solution
+      run: dotnet test Kinetq.Validation.sln
+      
+    - name: Publish Kinetq.Validation
+      uses: alirezanet/publish-nuget@v3.0.0
+      with:
+          PROJECT_FILE_PATH: Kinetq.Validation/Kinetq.Validation.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          INCLUDE_SYMBOLS: true

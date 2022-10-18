@@ -1,13 +1,12 @@
-﻿using Kinetq.Validation.Dictionary;
-using Kinetq.Validation.Helpers;
+﻿using Kinetq.Validation.Helpers;
 
-namespace Kinetq.Validation.Validators.Models
+namespace Kinetq.Validation.Models
 {
     public class ValidationErrors
     {
         public readonly IList<ValidationError> ErrorMessages = new List<ValidationError>();
 
-        public void Add(string name, string message, ErrorCode? errorCode = null)
+        public void Add(string name, string message, string? errorCode = null)
         {
             ValidationError validationError = ErrorMessages.FirstOrDefault(x => x.Field.Equals(name));
             if (validationError != null)

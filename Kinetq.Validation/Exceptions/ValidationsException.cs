@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Kinetq.Validation.Validators.Models;
+using Kinetq.Validation.Models;
 
 namespace Kinetq.Validation.Exceptions
 {

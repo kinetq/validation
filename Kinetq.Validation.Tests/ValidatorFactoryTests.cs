@@ -61,6 +61,32 @@ namespace Kinetq.Validation.Tests
 
             Assert.Equal("firstName", exception.ValidationErrors.ErrorMessages.First().Field);
             Assert.Equal("address.zipcode", exception.ValidationErrors.ErrorMessages.Last().Field);
+        }        
+        
+        [Fact]
+        public async Task Test_Array_SetsIndexOnFieldName()
+        {
+            var user = new UserDto()
+            {
+                LastName = "Doe",
+                FirstName = "John",
+                Address = new AddressDto()
+                {
+                    City = "Bisonica",
+                    Street = "3 Bison Ave",
+                    Zipcode = "89989"
+                },
+                Roles = new List<string>()
+                {
+                    "Admin",
+                    null
+                }
+            };
+
+            ValidationsException exception = 
+                await Record.ExceptionAsync(() => _validatorFactory.Validate(user)) as ValidationsException;
+
+            Assert.Equal("roles[1]", exception.ValidationErrors.ErrorMessages.First().Field);
         }
 
         [Fact]

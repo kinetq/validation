@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using Kinetq.Validation.Exceptions;
-using Kinetq.Validation.Validators.Models;
+using Kinetq.Validation.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

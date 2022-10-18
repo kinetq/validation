@@ -1,7 +1,7 @@
 ﻿using Kinetq.Validation.Exceptions;
 using Kinetq.Validation.Interfaces;
-using Kinetq.Validation.Validators.Models;
 using Kinetq.Validation.Helpers;
+using Kinetq.Validation.Models;
 
 namespace Kinetq.Validation.Factories
 {
@@ -27,12 +27,14 @@ namespace Kinetq.Validation.Factories
             {
                 validator.ValidatorFactory = this;
                 validator.GetName = SetupGetNameFunc(name);
+                validator.GetNameWithIndex = SetupGetNameWithIndexFunc(name);
+
                 await validator.Execute(dto, result);
             }
 
             if (result.ErrorMessages.Any()) throw new ValidationsException(result);
         }
-        
+
         public async Task ValidateNested<T>(T dto, string? name = null, ValidationErrors? validationErrors = null) where T : class
         {
             IEnumerable<IValidator<T>> validations =
@@ -46,26 +48,40 @@ namespace Kinetq.Validation.Factories
             {
                 validator.ValidatorFactory = this;
                 validator.GetName = SetupGetNameFunc(name);
+                validator.GetNameWithIndex = SetupGetNameWithIndexFunc(name);
 
                 await validator.Execute(dto, result);
             }
         }
 
 
-        private Func<string, int?, string> SetupGetNameFunc(string? name = null)
+        private Func<string, string> SetupGetNameFunc(string? name = null)
         {
-            return (string childName, int? index) =>
+            return (string childName) =>
             {
-                var fullName = name == null ? childName.FirstCharToLowerCase() : $"{name}.{childName.FirstCharToLowerCase()}";
-
-                if (index.HasValue)
-                {
-                    fullName = $"{fullName}[{index}]";
-                }
+                var fullName =
+                    name == null
+                        ? childName.FirstCharToLowerCase()
+                        : $"{name}.{childName.FirstCharToLowerCase()}";
 
                 return fullName;
             };
         }
- 
+
+        private Func<string, int, string> SetupGetNameWithIndexFunc(string? name = null)
+        {
+            return (string childName, int index) =>
+            {
+                var fullName =
+                    name == null
+                        ? childName.FirstCharToLowerCase()
+                        : $"{name}.{childName.FirstCharToLowerCase()}";
+
+                fullName = $"{fullName}[{index}]";
+
+                return fullName;
+            };
+        }
+
     }
 }

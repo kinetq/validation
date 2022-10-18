@@ -8,10 +8,10 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kinetq.Validation.Middleware;
+using Kinetq.Validation.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Kinetq.Validation.Tests.Dtos;
-using Kinetq.Validation.Validators.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
@@ -67,8 +67,8 @@ public class ValidatorMiddlewareTests
         var testClient = _testServer.CreateClient();
         var response =
             await testClient.PostAsync("/user", new StringContent(payload, Encoding.UTF8, "application/json"));
-        var responseObj = response.Content.ReadAsStringAsync();
-        var validations = JsonSerializer.Deserialize<ValidationResponse>(responseObj.Result, _testServer.Services.GetService<JsonSerializerOptions>());
+        var responseObj = await response.Content.ReadAsStringAsync();
+        var validations = JsonSerializer.Deserialize<ValidationResponse>(responseObj, _testServer.Services.GetService<JsonSerializerOptions>());
 
         Assert.Equal((HttpStatusCode)StatusCodes.Status400BadRequest, response.StatusCode);
         Assert.Equal("address.zipcode", validations.Errors.First().Field);

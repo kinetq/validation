@@ -1,4 +1,4 @@
-﻿namespace Kinetq.Validation.Validators.Models
+﻿namespace Kinetq.Validation.Models
 {
     public class ValidationResponse
     {

@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Kinetq.Validation.Factories;
 using Kinetq.Validation.Interfaces;
-using Kinetq.Validation.Validators.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kinetq.Validation.Helpers
