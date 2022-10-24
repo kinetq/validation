@@ -347,9 +347,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/ci/.idea
-/ci/infrastructure/.terraform.lock.hcl
-/infrastructure/.idea
-/src/Leagued.Scraper.Console/.local-chromium
-/src/Leagued.Api/App_Data/
-/ci/infrastructure/compose-files/local.env
